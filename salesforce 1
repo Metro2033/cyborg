@@ -1,0 +1,15 @@
+public class AddTwoNumbers {
+    public static Integer addNumbers(Integer num1, Integer num2) {
+        Integer sum = num1 + num2;
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Integer number1 = 5;
+        Integer number2 = 10;
+
+        Integer result = addNumbers(number1, number2);
+
+        System.debug('The sum of ' + number1 + ' and ' + number2 + ' is: ' + result);
+    }
+}
