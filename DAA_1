@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+int prac1_fib(int n ){
+    if(n==0){
+        return 0;
+    }else if(n==1){
+        return n;
+    }else{
+        int a=0;
+        int b =1;
+        for(int i=2;i<=n;i++){
+            int val=a+b;
+            a=b;
+            b=val;
+        }
+        return b;
+    }
+}
+
+int prac1_fib_recur(int n){
+    if(n==0 || n==1){
+        return n; 
+    }
+    return prac1_fib_recur(n-1)+prac1_fib_recur(n-2);
+}
+
+
+int main(){
+    int n;
+    cin >>n;
+    cout<<prac1_fib_recur(n)<<endl;
+
+    return 0;
+}
