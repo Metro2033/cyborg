@@ -1,0 +1,74 @@
+#include<iostream>
+using namespace std;
+class knapsack
+{
+    float wt[20],pf[20],y[20];
+    int cap,n,i,temp,profit;
+    public:
+    void getdata()
+    {
+        cout<<"\nEnter the capacity:-";
+        cin>>cap;
+        cout<<"\nEnter the no of object:-";
+        cin>>n;
+        cout<<"\nEnter the profit:-";
+        for(i=0;i<n;i++)
+        {
+            cin>>pf[i];
+        }
+        cout<<"\nEnter the weight:-";
+        for(i=0;i<n;i++)
+        {
+            cin>>wt[i];
+        }
+    }
+    void sortdata()
+    {
+        for(i=0;i<n;i++)
+        {
+            if(pf[i]/wt[i]<pf[i+1]/wt[i+1])
+            {
+                temp=pf[i];
+                pf[i]=pf[i+1];
+                pf[i+1]=temp;
+                temp=wt[i];
+                wt[i]=wt[i+1];
+                wt[i+1]=temp;
+            }
+        }
+    }
+    void calc()
+    {
+        for(i=0;i<n;i++)
+        {
+            y[i]=0.0;
+            if(wt[i]>cap)
+            break;
+            y[i]=1.0;
+            cap=cap-wt[i];
+        }
+        if(i<n)
+        {
+            y[i]=cap/wt[i];
+            for(i=0;i<n;i++)
+           profit=profit+(pf[i]*y[i]); 
+        }
+    }
+    void display()
+    {
+        cout<<"objno  weight profit \t\n";
+        for(i=0;i<n;i++)
+        {
+            cout<<i<<"\t"<<wt[i]<<"\t"<<pf[i]<<"\t"<<endl;
+        }
+        cout<<"maxprofit"<<profit;
+    }
+};
+int main()
+{
+    knapsack f1;
+    f1.getdata();
+    f1.sortdata();
+    f1.calc();
+    f1.display();
+}
