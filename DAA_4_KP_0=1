@@ -1,42 +1,30 @@
-#include<iostream>
-using namespace std;
+int knapsack_dp(int *weight,int *value,int idx, int  w , int **dp){
+    if(w<0){
+        return -1e5;
+    }if(idx<0){
+        return 0;
+    }
+    int pick = value[idx]+knapsack_dp(weight,value,idx-1,w-weight[idx],dp);
+    int not_pick = knapsack_dp(weight,value,idx-1,w,dp);
 
-int main() {
-    int capacity, items;
-
-    cout << "Enter the capacity of the knapsack: ";
-    cin >> capacity;
-
-    cout << "Enter the number of items: ";
-    cin >> items;
-
-    int price[items + 1];
-    int wt[items + 1];
-
-    cout << "Enter the values of the items: ";
-    for (int i = 1; i <= items; i++) {
-        cin >> price[i];
+    dp[idx][w]= max(pick,not_pick);
+    return dp[idx][w];
+}
+void knapsack_runner(){
+    int n ,w;
+    cin>>n>>w;
+    int *values = new int[n];
+    int *weight = new int[n];
+    for(int i=0;i<n;i++){
+        cin>>values[i];
+    }
+    for(int i=0;i<n;i++){
+        cin>>weight[i];
+    }
+    int** dp= new int*[n+1];
+    for(int i=0;i<=n;i++){
+        dp[i]= new int[w+1];
     }
 
-    cout << "Enter the weights of the items: ";
-    for (int i = 1; i <= items; i++) {
-        cin >> wt[i];
-    }
-
-    int dp[items + 1][capacity + 1];
-
-    for (int i = 0; i <= items; i++) {
-        for (int j = 0; j <= capacity; j++) {
-            if (i == 0 || j == 0) {
-                dp[i][j] = 0;
-            } else if (wt[i] <= j) {
-                dp[i][j] = max(dp[i - 1][j], price[i] + dp[i - 1][j - wt[i]]);
-            } else {
-                dp[i][j] = dp[i - 1][j];
-            }
-        }
-    }
-
-    cout << "Maximum Profit Earned: " << dp[items][capacity] << "\n";
-    return 0;
+    cout<<knapsack_dp(weight,values,n-1,w,dp)<<endl;
 }
