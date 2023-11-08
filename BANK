@@ -1,22 +1,49 @@
 pragma solidity ^0.8.0;
 
 contract Bank {
-    struct Person { int account_no; int balance; }
+    
+    struct Person {
+        int account_no;
+        int balance;
+    }
+    
     Person[] arr;
-
-    function addPerson(int acc_no, int bal) public { arr.push(Person(acc_no, bal)); }
-
+    
+    function addPerson(int acc_no, int bal) public {
+        Person memory p = Person(acc_no, bal);
+        arr.push(p);
+    }
+    
     function depositMoney(int acc_no, int amt) public returns (string memory) {
-        for (uint i = 0; i < arr.length; i++) if (arr[i].account_no == acc_no) { arr[i].balance += amt; return "success"; }
+        for (uint i = 0; i < arr.length; i++) {
+            if (arr[i].account_no == acc_no) {
+                arr[i].balance += amt;
+                return "success";
+            }
+        }
         return "failure";
     }
-
+    
     function withdraw(int acc_no, int amt) public returns (string memory) {
-        for (uint i = 0; i < arr.length; i++) if (arr[i].account_no == acc_no) return (amt <= arr[i].balance) ? "success" : "failure";
+        for (uint i = 0; i < arr.length; i++) {
+            if (arr[i].account_no == acc_no) {
+                if (amt <= arr[i].balance) {
+                    arr[i].balance -= amt;
+                    return "success";
+                } else {
+                    return "failure";
+                }
+            }
+        }
         return "failure";
     }
-
-    function showBalance(int acc_no) public view returns (int) { for (uint i = 0; i < arr.length; i++) if (arr[i].account_no == acc_no) return arr[i].balance; return -1; }
-
-    function transfer(int ac1, int ac2, int amt) public { for (uint i = 0; i < arr.length; i++) if (arr[i].account_no == ac1) for (uint j = 0; j < arr.length; j++) if (arr[j].account_no == ac2) { arr[i].balance -= amt; arr[j].balance += amt; } }
+    
+    function showBalance(int acc_no) public view returns (int) {
+        for (uint i = 0; i < arr.length; i++) {
+            if (arr[i].account_no == acc_no) {
+                return arr[i].balance;
+            }
+        }
+        return -1;
+    }
 }
