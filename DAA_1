@@ -24,12 +24,3 @@ int prac1_fib_recur(int n){
     }
     return prac1_fib_recur(n-1)+prac1_fib_recur(n-2);
 }
-
-
-int main(){
-    int n;
-    cin >>n;
-    cout<<prac1_fib_recur(n)<<endl;
-
-    return 0;
-}
